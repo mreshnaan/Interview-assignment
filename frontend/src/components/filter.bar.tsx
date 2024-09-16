@@ -42,18 +42,17 @@ const FilterBar: React.FC<FilterBarProps> = ({
             setPriceError('Minimum price cannot be greater than maximum price');
         } else {
             setPriceError(null);
-            setFilters(prev => ({ ...prev, [name]: value === '' ? undefined : value }));
-            debouncedSetFilters({ ...filters, [name]: value === '' ? undefined : value });
+            setFilters(prev => ({ ...prev, pageSize: 10, page: 1, [name]: value === '' ? undefined : value }));
+            debouncedSetFilters({ ...filters, pageSize: 10, page: 1, [name]: value === '' ? undefined : value });
         }
     };
-
     const handleCategoryChange = (categoryId: string) => {
         const updatedCategories = selectedCategories.includes(categoryId)
             ? selectedCategories.filter(id => id !== categoryId)
             : [...selectedCategories, categoryId];
         setSelectedCategories(updatedCategories);
-        setFilters(prev => ({ ...prev, categoryIds: updatedCategories }));
-        debouncedSetFilters({ ...filters, categoryIds: updatedCategories });
+        setFilters(prev => ({ ...prev, pageSize: 10, page: 1, categoryIds: updatedCategories }));
+        debouncedSetFilters({ ...filters, pageSize: 10, page: 1, categoryIds: updatedCategories });
     };
 
     return (
