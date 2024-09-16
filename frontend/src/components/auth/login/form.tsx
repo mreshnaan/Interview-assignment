@@ -17,6 +17,7 @@ import { toast } from "@/hooks/use-toast";
 import { loginUser } from "@/api-services/auth";
 import { useMutation } from "react-query";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from '@/contexts/AuthContext';
 
 
 const formSchema = z.object({
@@ -29,7 +30,9 @@ const formSchema = z.object({
 });
 
 function LoginForm() {
+
     const navigate = useNavigate();
+    const { login } = useAuth();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -48,6 +51,7 @@ function LoginForm() {
                 title: 'Login successful!',
                 description: 'You have been logged in successfully.',
             });
+            login();
             navigate('/products');
         },
         onError: (error: unknown) => {

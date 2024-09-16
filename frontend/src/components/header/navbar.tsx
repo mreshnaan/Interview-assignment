@@ -1,17 +1,18 @@
 import { TNavbar } from '@/types/navbar.type'
-import { Filter, Search, ShoppingBag, ShoppingCart } from 'lucide-react'
+import { Filter, LogOutIcon, Search, ShoppingBag, ShoppingCart } from 'lucide-react'
 import React, { useState } from 'react'
 import { Input } from '../ui/input';
 import { Button } from '../ui/button';
 import { useProductContext } from '@/contexts/ProductContext';
 import CartModal from '../modals/cart.modal';
+import { useAuth } from '@/contexts/AuthContext';
 
 
 
 const Navbar: React.FC<TNavbar> = ({ filters, setFilters, debouncedSetFilters, filtersOpen, setFiltersOpen, handleOpenModal }) => {
+    const { logout } = useAuth();
     const { cart } = useProductContext();
     const [isCartOpen, setIsCartOpen] = useState(false);
-
     const handleSearchChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const query = e.target.value;
         setFilters(prev => ({ ...prev, query }));
@@ -58,6 +59,10 @@ const Navbar: React.FC<TNavbar> = ({ filters, setFilters, debouncedSetFilters, f
                                 {totalItems}
                             </span>
                         )}
+                    </Button>
+                    <Button variant={"outline"} className="text-black px-6 py-2 rounded-full  transition duration-300 flex items-center" onClick={logout}>
+                        <LogOutIcon size={20} className="mr-2" />
+                        Logout
                     </Button>
                 </div>
             </div>
